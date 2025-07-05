@@ -14,20 +14,21 @@
             --amethyst: #510FD5;
         }
 
-        /* МНОЖЕСТВЕННАЯ ЗАГРУЗКА BRAHMS GOTISCH CYRILLIC */
+        /* ЗАГРУЗКА ФИРМЕННЫХ ШРИФТОВ */
+        
+        /* Приоритет 1: Brahms Gotisch Cyrillic */
         @font-face {
             font-family: 'Brahms Gotisch Cyrillic';
-            src: url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff2') format('woff2'),
-                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff') format('woff'),
-                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.ttf') format('truetype');
-            font-display: swap;
+            src: url('data:application/font-woff2;charset=utf-8;base64,') format('woff2'),
+                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff2') format('woff2'),
+                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff') format('woff');
+            font-display: block;
             font-weight: normal;
             font-style: normal;
         }
-
-        /* ЗАПАСНЫЕ ГОТИЧЕСКИЕ ШРИФТЫ */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=swap');
+        
+        /* Приоритет 2: Unbounded (Google Fonts) */
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400;700;900&display=swap');
 
         /* ОСНОВНЫЕ СТИЛИ */
         * {
@@ -39,7 +40,7 @@
         body {
             background-color: var(--abyss);
             color: var(--grimoire-shadow);
-            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
+            font-family: 'Brahms Gotisch Cyrillic', 'Unbounded', 'Times New Roman', serif;
             overflow-x: hidden;
             cursor: crosshair;
             min-height: 100vh;
@@ -131,9 +132,9 @@
             pointer-events: none;
         }
 
-        /* ВСЕ ЭЛЕМЕНТЫ ИСПОЛЬЗУЮТ BRAHMS GOTISCH CYRILLIC */
-        .main-header {
-            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
+        /* СТИЛИ ДЛЯ РЕЖИМА BRAHMS GOTISCH CYRILLIC */
+        .brahms-mode .main-header {
+            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
             font-size: 2.4rem;
             line-height: 1.2;
             margin-bottom: 15px;
@@ -144,8 +145,8 @@
             font-weight: normal;
         }
 
-        .sub-header {
-            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
+        .brahms-mode .sub-header {
+            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
             font-size: 1.8rem;
             line-height: 1.2;
             margin-bottom: 40px;
@@ -156,8 +157,8 @@
             font-weight: normal;
         }
 
-        .main-text {
-            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
+        .brahms-mode .main-text {
+            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
             font-size: 1.1rem;
             line-height: 1.8;
             text-align: left;
@@ -169,8 +170,58 @@
             font-weight: normal;
         }
 
+        .brahms-mode .cta-button {
+            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
+            text-transform: lowercase;
+            font-weight: normal;
+        }
+
+        /* СТИЛИ ДЛЯ РЕЖИМА UNBOUNDED */
+        .unbounded-mode .main-header {
+            font-family: 'Unbounded', 'Arial', sans-serif;
+            font-size: 2.4rem;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            text-align: left;
+            color: var(--grimoire-shadow);
+            letter-spacing: 0.5px;
+            text-transform: lowercase;
+            font-weight: 900; /* Black */
+        }
+
+        .unbounded-mode .sub-header {
+            font-family: 'Unbounded', 'Arial', sans-serif;
+            font-size: 1.8rem;
+            line-height: 1.2;
+            margin-bottom: 40px;
+            text-align: left;
+            color: var(--grimoire-shadow);
+            letter-spacing: 0.3px;
+            text-transform: lowercase;
+            font-weight: 700; /* Bold */
+        }
+
+        .unbounded-mode .main-text {
+            font-family: 'Unbounded', 'Arial', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: left;
+            color: var(--grimoire-shadow);
+            white-space: pre-line;
+            margin-bottom: 50px;
+            letter-spacing: 0.3px;
+            text-transform: lowercase;
+            font-weight: 200; /* Extra Light */
+        }
+
+        .unbounded-mode .cta-button {
+            font-family: 'Unbounded', 'Arial', sans-serif;
+            text-transform: lowercase;
+            font-weight: 700; /* Bold */
+        }
+
+        /* ОБЩИЕ СТИЛИ ДЛЯ КНОПКИ */
         .cta-button {
-            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
             background: var(--quartz);
             border: 3px solid var(--grimoire-shadow);
             color: var(--grimoire-shadow);
@@ -182,9 +233,7 @@
             opacity: 0;
             transform: translateY(30px);
             margin-top: 20px;
-            text-transform: lowercase;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            font-weight: normal;
         }
 
         .cta-button.visible {
@@ -201,16 +250,6 @@
             transform: scale(1.05) translateY(-2px);
         }
 
-        /* ПРОВЕРКА ЗАГРУЗКИ ШРИФТА */
-        .font-test {
-            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
-            position: fixed;
-            top: -100px;
-            left: -100px;
-            visibility: hidden;
-            font-size: 12px;
-        }
-
         /* АДАПТИВ ДЛЯ ПЛАНШЕТОВ */
         @media (max-width: 768px) {
             .parchment {
@@ -219,21 +258,21 @@
             }
 
             .main-header {
-                font-size: 2rem;
+                font-size: 2rem !important;
             }
 
             .sub-header {
-                font-size: 1.5rem;
+                font-size: 1.5rem !important;
             }
 
             .main-text {
-                font-size: 1rem;
-                line-height: 1.7;
+                font-size: 1rem !important;
+                line-height: 1.7 !important;
             }
 
             .cta-button {
-                font-size: 1.2rem;
-                padding: 15px 30px;
+                font-size: 1.2rem !important;
+                padding: 15px 30px !important;
             }
         }
 
@@ -249,29 +288,26 @@
             }
 
             .main-header {
-                font-size: 1.6rem;
+                font-size: 1.6rem !important;
             }
 
             .sub-header {
-                font-size: 1.3rem;
+                font-size: 1.3rem !important;
             }
 
             .main-text {
-                font-size: 0.9rem;
-                line-height: 1.6;
+                font-size: 0.9rem !important;
+                line-height: 1.6 !important;
             }
 
             .cta-button {
-                font-size: 1rem;
-                padding: 12px 25px;
+                font-size: 1rem !important;
+                padding: 12px 25px !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- СКРЫТЫЙ ЭЛЕМЕНТ ДЛЯ ПРОВЕРКИ ЗАГРУЗКИ ШРИФТА -->
-    <div class="font-test">Test</div>
-
     <!-- CANVAS ДЛЯ АНИМАЦИИ РАЗРУШЕНИЯ -->
     <canvas id="destruction-canvas"></canvas>
 
@@ -312,16 +348,32 @@
     </div>
 
     <script>
-        // ПРОВЕРКА ЗАГРУЗКИ ШРИФТА
-        document.fonts.ready.then(function () {
-            console.log('Все шрифты загружены');
-            // Проверяем, загрузился ли Brahms Gotisch Cyrillic
-            if (document.fonts.check('1em "Brahms Gotisch Cyrillic"')) {
-                console.log('Brahms Gotisch Cyrillic загружен успешно');
-            } else {
-                console.log('Brahms Gotisch Cyrillic не загружен, используется fallback');
-            }
-        });
+        // ПРОВЕРКА И ПРИМЕНЕНИЕ ШРИФТОВ
+        function checkAndApplyFonts() {
+            // Ждем загрузки всех шрифтов
+            document.fonts.ready.then(() => {
+                // Проверяем, загрузился ли Brahms Gotisch Cyrillic
+                const testElement = document.createElement('span');
+                testElement.style.fontFamily = '"Brahms Gotisch Cyrillic"';
+                testElement.style.fontSize = '12px';
+                testElement.style.position = 'absolute';
+                testElement.style.visibility = 'hidden';
+                testElement.textContent = 'Test';
+                document.body.appendChild(testElement);
+                
+                const computedFont = window.getComputedStyle(testElement).fontFamily;
+                document.body.removeChild(testElement);
+                
+                // Если Brahms Gotisch Cyrillic загрузился
+                if (computedFont.includes('Brahms Gotisch Cyrillic')) {
+                    console.log('✅ Brahms Gotisch Cyrillic загружен успешно');
+                    document.body.className = 'brahms-mode';
+                } else {
+                    console.log('⚠️ Brahms Gotisch Cyrillic не загружен, переключаемся на Unbounded');
+                    document.body.className = 'unbounded-mode';
+                }
+            });
+        }
 
         // ИНИЦИАЛИЗАЦИЯ CANVAS
         const canvas = document.getElementById('destruction-canvas');
@@ -357,7 +409,7 @@
                 this.x += this.vx;
                 this.y += this.vy;
                 this.vx *= 0.98;
-                this.vy += 0.01; // гравитация
+                this.vy += 0.01;
                 this.life -= this.decay;
                 this.size *= 0.998;
             }
@@ -404,7 +456,6 @@
                 ctx.beginPath();
                 ctx.moveTo(this.x, this.y);
                 
-                // Создаем зигзагообразную готическую трещину
                 let segments = 5;
                 for (let i = 1; i <= segments; i++) {
                     let segmentLength = this.length / segments * i;
@@ -426,7 +477,6 @@
             mouse.x = e.clientX;
             mouse.y = e.clientY;
 
-            // Создаем частицы пепла
             for (let i = 0; i < 4; i++) {
                 particles.push(new AshParticle(
                     mouse.x + (Math.random() - 0.5) * 20,
@@ -434,10 +484,9 @@
                 ));
             }
 
-            // Создаем готические трещины при движении
             if (Math.random() < 0.3) {
                 let angle = Math.atan2(mouse.y - lastMouse.y, mouse.x - lastMouse.x);
-                angle += (Math.random() - 0.5) * 0.8; // случайное отклонение
+                angle += (Math.random() - 0.5) * 0.8;
                 cracks.push(new GothicCrack(mouse.x, mouse.y, angle));
             }
         }
@@ -453,21 +502,18 @@
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Обновление и отрисовка частиц
             particles = particles.filter(particle => {
                 particle.update();
                 particle.draw();
                 return particle.life > 0 && particle.size > 0.1;
             });
 
-            // Обновление и отрисовка трещин
             cracks = cracks.filter(crack => {
                 crack.update();
                 crack.draw();
                 return crack.life > 0;
             });
 
-            // Случайные частицы для атмосферы
             if (Math.random() < 0.02) {
                 particles.push(new AshParticle(
                     Math.random() * canvas.width,
@@ -483,7 +529,7 @@
         window.addEventListener('touchmove', handleTouchMove, { passive: false });
         window.addEventListener('touchstart', handleTouchMove, { passive: false });
 
-        // АНИМАЦИЯ ПОЯВЛЕНИЯ КОНТЕНТА С ЭФФЕКТОМ ZOOM IN
+        // АНИМАЦИЯ ПОЯВЛЕНИЯ КОНТЕНТА
         function revealManifesto() {
             const parchment = document.querySelector('.parchment');
             const button = document.querySelector('.cta-button');
@@ -496,13 +542,13 @@
             }, 800);
         }
 
-        // ЗАПУСК
+        // ЗАПУСК ВСЕХ СИСТЕМ
+        checkAndApplyFonts();
         animate();
         revealManifesto();
 
         // ОБРАБОТЧИК КНОПКИ
         document.querySelector('.cta-button').addEventListener('click', function() {
-            // Переход к следующему разделу или форме
             alert('Переход к форме алхимии!');
         });
     </script>
