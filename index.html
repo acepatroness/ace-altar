@@ -7,7 +7,6 @@
     <style>
         /* ПЕРЕМЕННЫЕ ТВОЕЙ ИМПЕРИИ */
         :root {
-            --amethyst: #510FD5;
             --abyss: #111111;
             --grimoire-shadow: #2D2C2F;
             --structure-gray: #C1BFBF;
@@ -19,7 +18,7 @@
         @font-face {
             font-family: 'Brahms Gotisch Cyrillic';
             src: url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff2') format('woff2');
-            font-display: swap; /* Показывает запасной шрифт, пока грузится основной */
+            font-display: swap;
         }
 
         /* ОСНОВА */
@@ -28,20 +27,42 @@
             background-color: var(--abyss);
             color: var(--structure-gray);
             overflow: hidden;
-            cursor: crosshair;
+            cursor: none;
         }
 
-        canvas {
+        /* ФОН: АНИМИРОВАННЫЙ БЕТОН */
+        #concrete-background {
             position: fixed;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill-rule="evenodd"%3E%3Cg fill="%232D2C2F" fill-opacity="0.4"%3E%3Cpath opacity=".5" d="M96 95h4v1h-4v-1zm-7 5v-1h-2v1h2zm-2-2v-2h-1v2h1zm-2-2h-1v1h1v-1zm-3 1h-1v1h1v-1z"/%3E%3Cpath d="M22 95v1h1v-1h-1zM23 94v1h1v-1h-1zM24 93v1h1v-1h-1zM25 92v1h1v-1h-1zM26 91v1h1v-1h-1zM27 90v1h1v-1h-1zM28 89v1h1v-1h-1zM29 88v1h1v-1h-1zM30 87v1h1v-1h-1zM31 86v1h1v-1h-1zM32 85v1h1v-1h-1zM33 84v1h1v-1h-1zM34 83v1h1v-1h-1zM35 82v1h1v-1h-1zM36 81v1h1v-1h-1zM37 80v1h1v-1h-1zM38 79v1h1v-1h-1zM39 78v1h1v-1h-1zM40 77v1h1v-1h-1zM41 76v1h1v-1h-1zM42 75v1h1v-1h-1zM43 74v1h1v-1h-1zM44 73v1h1v-1h-1zM45 72v1h1v-1h-1zM46 71v1h1v-1h-1zM47 70v1h1v-1h-1zM48 69v1h1v-1h-1zM49 68v1h1v-1h-1zM50 67v1h1v-1h-1zM51 66v1h1v-1h-1zM52 65v1h1v-1h-1zM53 64v1h1v-1h-1zM54 63v1h1v-1h-1zM55 62v1h1v-1h-1zM56 61v1h1v-1h-1zM57 60v1h1v-1h-1zM58 59v1h1v-1h-1zM59 58v1h1v-1h-1zM60 57v1h1v-1h-1zM61 56v1h1v-1h-1zM62 55v1h1v-1h-1zM63 54v1h1v-1h-1zM64 53v1h1v-1h-1zM65 52v1h1v-1h-1zM66 51v1h1v-1h-1zM67 50v1h1v-1h-1zM68 49v1h1v-1h-1zM69 48v1h1v-1h-1zM70 47v1h1v-1h-1zM71 46v1h1v-1h-1zM72 45v1h1v-1h-1zM73 44v1h1v-1h-1zM74 43v1h1v-1h-1zM75 42v1h1v-1h-1zM76 41v1h1v-1h-1zM77 40v1h1v-1h-1zM78 39v1h1v-1h-1zM79 38v1h1v-1h-1zM80 37v1h1v-1h-1zM81 36v1h1v-1h-1zM82 35v1h1v-1h-1zM83 34v1h1v-1h-1zM84 33v1h1v-1h-1zM85 32v1h1v-1h-1zM86 31v1h1v-1h-1zM87 30v1h1v-1h-1zM88 29v1h1v-1h-1zM89 28v1h1v-1h-1zM90 27v1h1v-1h-1zM91 26v1h1v-1h-1zM92 25v1h1v-1h-1zM93 24v1h1v-1h-1zM94 23v1h1v-1h-1zM95 22v1h1v-1h-1z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            animation: move-concrete 200s linear infinite;
+        }
+
+        #cursor-light {
+            position: fixed;
+            z-index: 2;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(200, 200, 200, 0.05) 0%, rgba(200, 200, 200, 0) 40%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: background 0.2s;
+        }
+
+        @keyframes move-concrete {
+            0% { background-position: 0 0; }
+            100% { background-position: 2000px 2000px; }
         }
 
         /* КОНТЕЙНЕР ДЛЯ ТЕКСТА */
         .manifesto-container {
             position: relative;
-            z-index: 2;
+            z-index: 3;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -53,59 +74,51 @@
         }
 
         .text-block {
-            background: rgba(45, 44, 47, 0.6); /* Grimoire Shadow с прозрачностью */
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(45, 44, 47, 0.7); /* Grimoire Shadow */
+            border: 1px solid rgba(193, 191, 191, 0.2); /* Structure Gray */
             padding: 30px 40px;
-            border: 1px solid rgba(81, 15, 213, 0.5); /* Amethyst с прозрачностью */
             max-width: 600px;
             opacity: 0;
-            transform: translateY(20px);
+            transform: scale(0.98);
             transition: opacity 1.5s ease-out 0.5s, transform 1.5s ease-out 0.5s;
         }
         
-        .text-block.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .text-block.visible { opacity: 1; transform: scale(1); }
 
         /* ШРИФТЫ И ТЕКСТ */
-        .header-font { font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif; text-transform: lowercase; }
-        .body-font { font-family: 'Unbounded', 'Arial', sans-serif; font-weight: 200; }
+        .header-font { font-family: 'Brahms Gotisch Cyrillic', 'Garamond', serif; text-transform: uppercase; }
+        .body-font { font-family: 'Unbounded', 'Helvetica', sans-serif; font-weight: 200; }
 
-        #main-header { font-size: 2.2rem; color: var(--quartz); margin: 0; }
-        #sub-header { font-size: 1.3rem; margin-top: 5px; margin-bottom: 20px; color: var(--amethyst); text-shadow: 0 0 10px var(--amethyst); }
-        #main-text p { margin: 8px 0; font-size: 1rem; line-height: 1.6; }
+        #main-header { font-size: 2rem; color: var(--quartz); margin: 0; letter-spacing: 2px; }
+        #sub-header { font-size: 1.1rem; margin-top: 10px; margin-bottom: 25px; color: var(--structure-gray); letter-spacing: 1px; }
+        #main-text { white-space: pre-wrap; /* СОХРАНЯЕТ ТВОИ ПЕРЕНОСЫ СТРОК */ }
+        #main-text p { margin: 0; font-size: 1rem; line-height: 1.7; }
         #main-text p.highlight { color: var(--quartz); font-weight: 400; }
 
         /* КНОПКА */
         #cta-button {
-            background-color: var(--amethyst); color: var(--quartz); border: none;
-            padding: 15px 40px; margin-top: 30px; font-size: 1.5rem; cursor: crosshair;
-            box-shadow: 0 0 20px rgba(81, 15, 213, 0.7);
+            background-color: transparent; color: var(--quartz);
+            border: 2px solid var(--quartz);
+            padding: 15px 40px; margin-top: 30px; font-size: 1.5rem; cursor: none;
             opacity: 0;
             transition: all 0.5s ease;
         }
         
-        #cta-button.visible {
-             opacity: 1;
-        }
-
-        #cta-button:hover { transform: scale(1.05); box-shadow: 0 0 35px var(--amethyst); }
+        #cta-button.visible { opacity: 1; }
+        #cta-button:hover { background-color: var(--quartz); color: var(--abyss); }
         
-        /* АДАПТИВ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
+        /* АДАПТИВ */
         @media (max-width: 768px) {
-            .text-block { padding: 20px; }
-            #main-header { font-size: 1.8rem; }
-            #sub-header { font-size: 1.1rem; }
+            .text-block { padding: 20px; border: none; }
+            #main-header { font-size: 1.5rem; }
+            #sub-header { font-size: 1rem; }
             #main-text p { font-size: 0.9rem; }
-            #cta-button { font-size: 1.2rem; padding: 12px 30px; }
         }
-
     </style>
 </head>
 <body>
-    <canvas id="vitrage-canvas"></canvas>
+    <div id="concrete-background"></div>
+    <div id="cursor-light"></div>
     <div class="manifesto-container">
         <div class="text-block">
             <h1 id="main-header" class="header-font"></h1>
@@ -116,88 +129,12 @@
     </div>
 
     <script>
-        // --- ДВИЖОК "РАСКОЛОТЫЙ ВИТРАЖ" ---
-        const canvas = document.getElementById('vitrage-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const mouse = { x: undefined, y: undefined };
-        canvas.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
+        // --- ДВИЖОК "ПРИЗРАЧНЫЙ СВЕТ" ---
+        const light = document.getElementById('cursor-light');
+        window.addEventListener('mousemove', (e) => {
+            light.style.left = e.clientX + 'px';
+            light.style.top = e.clientY + 'px';
         });
-
-        class Shard {
-            constructor(x, y, length, angle, speed, color) {
-                this.x = x; this.y = y; this.length = length;
-                this.angle = angle; this.speed = speed; this.color = color;
-                this.life = 1; // 1 = full life, 0 = dead
-            }
-            update() {
-                this.x += Math.cos(this.angle) * this.speed;
-                this.y += Math.sin(this.angle) * this.speed;
-                this.life -= 0.005; // Осколки медленно исчезают
-            }
-            draw() {
-                ctx.save();
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.x + Math.cos(this.angle) * this.length, this.y + Math.sin(this.angle) * this.length);
-                ctx.strokeStyle = `rgba(81, 15, 213, ${this.life * 0.5})`; // Amethyst
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-                ctx.restore();
-            }
-        }
-
-        let shards = [];
-        function createShards(count) {
-            for (let i = 0; i < count; i++) {
-                const length = Math.random() * 30 + 10;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 0.3 + 0.1;
-                const x = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
-                shards.push(new Shard(x, y, length, angle, speed));
-            }
-        }
-
-        function handleMouseInteraction() {
-            if(mouse.x === undefined) return;
-            // Создаем новые осколки у курсора
-            for (let i = 0; i < 2; i++) {
-                const length = Math.random() * 40 + 20;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 0.5 + 0.2;
-                shards.push(new Shard(mouse.x, mouse.y, length, angle, speed));
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            handleMouseInteraction();
-
-            shards = shards.filter(shard => shard.life > 0); // Удаляем мертвые осколки
-            if (shards.length < 100) { // Поддерживаем плотность
-                createShards(1);
-            }
-
-            shards.forEach(shard => {
-                shard.update();
-                shard.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-        
-        createShards(100);
-        animate();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
 
         // --- ЛОГИКА ПРОЯВЛЕНИЯ МАНИФЕСТА ---
         const textBlock = document.querySelector('.text-block');
@@ -206,42 +143,38 @@
         const subHeaderEl = document.getElementById('sub-header');
         const mainTextEl = document.getElementById('main-text');
 
-        const content = {
-            header: "наш храм не для всех",
-            subHeader: "только для смелых",
-            paragraphs: [
-                "Вы ищете просто «агентство» или «исполнителя»?!",
-                "Закройте эту вкладку прямо сейчас!",
-                "Мы работаем с теми, кто готов к реинкарнации,",
-                "а не к стерильному «ребрендингу» или",
-                "«а сделайте вот так же как у конкурентов».",
-                "Мы не копируем! Мы создаем!",
-                "Мы против шаблонов и заезженных решений.",
-                "Нас тошнит от фейка и «успешного успеха».",
-                "Мы против копипаста и воровства идей!",
-                "Мы не придумываем лживую легенду.",
-                "Мы погружаемся в ваш хаос и тьму.",
-                "Мы вскрываем ВАШ ЛИЧНЫЙ КОД!",
-                "Мы сжигаем всё лишнее. Весь мусор.",
-                "На этом пепле строим вашу Империю.",
-                "Мы сжигаем шаблоны и строим легенды.",
-                "Готовы к персональному ритуалу?",
-                "Добро пожаловать к Алтарю."
-            ]
-        };
+        // ТВОЙ УТВЕРЖДЕННЫЙ ТЕКСТ
+        const headerText = "НАШ ХРАМ НЕ ДЛЯ ВСЕХ";
+        const subHeaderText = "ТОЛЬКО ДЛЯ СМЕЛЫХ";
+        const mainContent = `
+<p>Вы ищете просто «агентство» или «исполнителя»?!</p>
+<p>Закройте эту вкладку прямой сейчас!</p>
+<p>&nbsp;</p>
+<p>Мы работает с теми, кто готов к реинкарнации,</p>
+<p>а не к стерильному «ребрендингу» или</p>
+<p>«а сделайте вот так же как у конкурентов».</p>
+<p>Мы не копируем! Мы создаем!</p>
+<p>&nbsp;</p>
+<p>Мы против шаблонов и заезженных решений.</p>
+<p>Нас тошнит от фейка и «успешного успеха».</p>
+<p>Мы против копипаста и воровства идей!</p>
+<p>&nbsp;</p>
+<p>Мы не придумываем лживую легенду.</p>
+<p>Мы погружаемся в ваш хаос и тьму.</p>
+<p class="highlight">Мы вскрываем ВАШ ЛИЧНЫЙ КОД!</p>
+<p>&nbsp;</p>
+<p>Мы сжигаем всё лишнее. Весь мусор.</p>
+<p>На этом пепле строим вашу Империю.</p>
+<p>Мы сжигаем шаблоны и строим легенды.</p>
+<p>&nbsp;</p>
+<p>Готовы к персональному ритуалу?</p>
+<p>Добро пожаловать к Алтарю.</p>
+`;
 
         function revealManifesto() {
-            mainHeaderEl.textContent = content.header;
-            subHeaderEl.textContent = content.subHeader;
-            mainTextEl.innerHTML = '';
-            content.paragraphs.forEach(p_text => {
-                const p = document.createElement('p');
-                p.textContent = p_text;
-                if (p_text.includes("ВАШ ЛИЧНЫЙ КОД!")) {
-                    p.classList.add('highlight');
-                }
-                mainTextEl.appendChild(p);
-            });
+            mainHeaderEl.textContent = headerText;
+            subHeaderEl.textContent = subHeaderText;
+            mainTextEl.innerHTML = mainContent;
             
             setTimeout(() => {
                 textBlock.classList.add('visible');
