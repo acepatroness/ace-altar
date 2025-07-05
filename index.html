@@ -14,17 +14,20 @@
             --amethyst: #510FD5;
         }
 
-        /* ЗАГРУЗКА ФИРМЕННЫХ ШРИФТОВ */
+        /* МНОЖЕСТВЕННАЯ ЗАГРУЗКА BRAHMS GOTISCH CYRILLIC */
         @font-face {
             font-family: 'Brahms Gotisch Cyrillic';
             src: url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff2') format('woff2'),
-                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff') format('woff');
+                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff') format('woff'),
+                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.ttf') format('truetype');
             font-display: swap;
             font-weight: normal;
             font-style: normal;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400&display=swap');
+        /* ЗАПАСНЫЕ ГОТИЧЕСКИЕ ШРИФТЫ */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=swap');
 
         /* ОСНОВНЫЕ СТИЛИ */
         * {
@@ -36,7 +39,7 @@
         body {
             background-color: var(--abyss);
             color: var(--grimoire-shadow);
-            font-family: 'Unbounded', 'Arial', sans-serif;
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
             overflow-x: hidden;
             cursor: crosshair;
             min-height: 100vh;
@@ -76,7 +79,7 @@
                 0 0 50px rgba(0, 0, 0, 0.8),
                 inset 0 0 0 1px rgba(45, 44, 47, 0.1);
             opacity: 0;
-            transform: translateY(50px) scale(0.95);
+            transform: translateY(50px) scale(0.8);
             transition: all 2s ease-out;
             
             /* СОЗДАЕМ РВАНЫЕ КРАЯ ЧЕРЕЗ CLIP-PATH */
@@ -128,9 +131,9 @@
             pointer-events: none;
         }
 
-        /* ЗАГОЛОВКИ - BRAHMS GOTISCH CYRILLIC */
+        /* ВСЕ ЭЛЕМЕНТЫ ИСПОЛЬЗУЮТ BRAHMS GOTISCH CYRILLIC */
         .main-header {
-            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
             font-size: 2.4rem;
             line-height: 1.2;
             margin-bottom: 15px;
@@ -142,7 +145,7 @@
         }
 
         .sub-header {
-            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
             font-size: 1.8rem;
             line-height: 1.2;
             margin-bottom: 40px;
@@ -153,10 +156,8 @@
             font-weight: normal;
         }
 
-        /* ОСНОВНОЙ ТЕКСТ - UNBOUNDED EXTRA LIGHT */
         .main-text {
-            font-family: 'Unbounded', 'Arial', sans-serif;
-            font-weight: 200;
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
             font-size: 1.1rem;
             line-height: 1.8;
             text-align: left;
@@ -164,11 +165,12 @@
             white-space: pre-line;
             margin-bottom: 50px;
             letter-spacing: 0.3px;
+            text-transform: lowercase;
+            font-weight: normal;
         }
 
-        /* КНОПКА - BRAHMS GOTISCH CYRILLIC */
         .cta-button {
-            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
             background: var(--quartz);
             border: 3px solid var(--grimoire-shadow);
             color: var(--grimoire-shadow);
@@ -197,6 +199,16 @@
                 0 0 30px rgba(45, 44, 47, 0.8),
                 0 8px 25px rgba(0, 0, 0, 0.4);
             transform: scale(1.05) translateY(-2px);
+        }
+
+        /* ПРОВЕРКА ЗАГРУЗКИ ШРИФТА */
+        .font-test {
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Cormorant Garamond', 'Times New Roman', serif;
+            position: fixed;
+            top: -100px;
+            left: -100px;
+            visibility: hidden;
+            font-size: 12px;
         }
 
         /* АДАПТИВ ДЛЯ ПЛАНШЕТОВ */
@@ -257,6 +269,9 @@
     </style>
 </head>
 <body>
+    <!-- СКРЫТЫЙ ЭЛЕМЕНТ ДЛЯ ПРОВЕРКИ ЗАГРУЗКИ ШРИФТА -->
+    <div class="font-test">Test</div>
+
     <!-- CANVAS ДЛЯ АНИМАЦИИ РАЗРУШЕНИЯ -->
     <canvas id="destruction-canvas"></canvas>
 
@@ -266,37 +281,48 @@
             <h1 class="main-header">наш храм не для всех</h1>
             <h2 class="sub-header">только для смелых</h2>
             
-            <div class="main-text">Вы ищете просто «агентство» или «исполнителя»?!
-Закройте эту вкладку прямой сейчас!
+            <div class="main-text">вы ищете просто «агентство» или «исполнителя»?!
+закройте эту вкладку прямой сейчас!
 
-Мы работает с теми, кто готов к реинкарнации,
+мы работает с теми, кто готов к реинкарнации,
 а не к стерильному «ребрендингу» или
 «а сделайте вот так же как у конкурентов».
-Мы не копируем! Мы создаем!
+мы не копируем! мы создаем!
 
-Мы против шаблонов и заезженных решений.
-Нас тошнит от фейка и «успешного успеха».
-Мы против копипаста и воровства идей!
+мы против шаблонов и заезженных решений.
+нас тошнит от фейка и «успешного успеха».
+мы против копипаста и воровства идей!
 
-Мы не придумываем лживую легенду.
-Мы погружаемся в ваш хаос и тьму.
-Мы вскрываем ВАШ ЛИЧНЫЙ КОД!
+мы не придумываем лживую легенду.
+мы погружаемся в ваш хаос и тьму.
+мы вскрываем ваш личный код!
 
-Мы сжигаем всё лишнее. Весь мусор.
-На этом пепле строим вашу Империю.
-Мы сжигаем шаблоны и строим легенды.
+мы сжигаем всё лишнее. весь мусор.
+на этом пепле строим вашу империю.
+мы сжигаем шаблоны и строим легенды.
 
-Мы создаем бренды и мероприятия,
+мы создаем бренды и мероприятия,
 после которых говорят «это огонь»!
 
-Готовы к персональному ритуалу?
-Добро пожаловать к Алтарю.</div>
+готовы к персональному ритуалу?
+добро пожаловать к алтарю.</div>
         </div>
         
         <button class="cta-button">хочу алхимию</button>
     </div>
 
     <script>
+        // ПРОВЕРКА ЗАГРУЗКИ ШРИФТА
+        document.fonts.ready.then(function () {
+            console.log('Все шрифты загружены');
+            // Проверяем, загрузился ли Brahms Gotisch Cyrillic
+            if (document.fonts.check('1em "Brahms Gotisch Cyrillic"')) {
+                console.log('Brahms Gotisch Cyrillic загружен успешно');
+            } else {
+                console.log('Brahms Gotisch Cyrillic не загружен, используется fallback');
+            }
+        });
+
         // ИНИЦИАЛИЗАЦИЯ CANVAS
         const canvas = document.getElementById('destruction-canvas');
         const ctx = canvas.getContext('2d');
@@ -457,7 +483,7 @@
         window.addEventListener('touchmove', handleTouchMove, { passive: false });
         window.addEventListener('touchstart', handleTouchMove, { passive: false });
 
-        // АНИМАЦИЯ ПОЯВЛЕНИЯ КОНТЕНТА
+        // АНИМАЦИЯ ПОЯВЛЕНИЯ КОНТЕНТА С ЭФФЕКТОМ ZOOM IN
         function revealManifesto() {
             const parchment = document.querySelector('.parchment');
             const button = document.querySelector('.cta-button');
