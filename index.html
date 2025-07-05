@@ -14,16 +14,18 @@
             --amethyst: #510FD5;
         }
 
-        /* ЗАГРУЗКА ФИРМЕННОГО ШРИФТА */
+        /* ЗАГРУЗКА ФИРМЕННОГО ШРИФТА - НЕСКОЛЬКО ИСТОЧНИКОВ */
         @font-face {
             font-family: 'Brahms Gotisch Cyrillic';
-            src: url('https://fonts-online.ru/fonts/brahms-gotisch-cyrillic/BrahmsGotischCyrillic.woff2') format('woff2'),
-                 url('https://fonts-online.ru/fonts/brahms-gotisch-cyrillic/BrahmsGotischCyrillic.woff') format('woff'),
-                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff2') format('woff2');
+            src: url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff2') format('woff2'),
+                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff') format('woff');
             font-display: swap;
             font-weight: normal;
             font-style: normal;
         }
+
+        /* РЕЗЕРВНЫЙ ГОТИЧЕСКИЙ ШРИФТ */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400&display=swap');
 
         /* ОСНОВНЫЕ СТИЛИ */
         * {
@@ -35,7 +37,7 @@
         body {
             background-color: var(--abyss);
             color: var(--grimoire-shadow);
-            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Times New Roman', serif;
             overflow-x: hidden;
             cursor: crosshair;
             min-height: 100vh;
@@ -64,7 +66,7 @@
             padding: 40px 20px;
         }
 
-        /* ПЕРГАМЕНТ */
+        /* ПЕРГАМЕНТ С РВАНЫМИ КРАЯМИ */
         .parchment {
             background: var(--quartz);
             max-width: 800px;
@@ -73,10 +75,38 @@
             position: relative;
             box-shadow: 
                 0 0 50px rgba(0, 0, 0, 0.8),
-                inset 0 0 0 2px var(--grimoire-shadow);
+                inset 0 0 0 1px rgba(45, 44, 47, 0.1);
             opacity: 0;
             transform: translateY(50px) scale(0.95);
             transition: all 2s ease-out;
+            
+            /* СОЗДАЕМ РВАНЫЕ КРАЯ ЧЕРЕЗ CLIP-PATH */
+            clip-path: polygon(
+                2% 0%, 
+                98% 1%, 
+                99% 8%, 
+                97% 15%, 
+                99% 25%, 
+                98% 35%, 
+                100% 45%, 
+                97% 55%, 
+                99% 65%, 
+                96% 75%, 
+                98% 85%, 
+                97% 95%, 
+                92% 99%, 
+                8% 100%, 
+                1% 97%, 
+                3% 87%, 
+                1% 77%, 
+                4% 67%, 
+                1% 57%, 
+                3% 47%, 
+                0% 37%, 
+                2% 27%, 
+                1% 17%, 
+                3% 7%
+            );
         }
 
         .parchment.visible {
@@ -93,45 +123,38 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(45, 44, 47, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(45, 44, 47, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(45, 44, 47, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 20% 80%, rgba(45, 44, 47, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(45, 44, 47, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(45, 44, 47, 0.04) 0%, transparent 50%);
             pointer-events: none;
-        }
-
-        /* ГОТИЧЕСКИЕ УГЛЫ */
-        .parchment::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: var(--grimoire-shadow);
-            z-index: -1;
         }
 
         /* ЗАГОЛОВКИ */
         .main-header {
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Times New Roman', serif;
             font-size: 2.4rem;
             line-height: 1.2;
             margin-bottom: 15px;
             text-align: left;
             color: var(--grimoire-shadow);
             letter-spacing: 0.5px;
+            text-transform: lowercase;
         }
 
         .sub-header {
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Times New Roman', serif;
             font-size: 1.8rem;
             line-height: 1.2;
             margin-bottom: 40px;
             text-align: left;
             color: var(--grimoire-shadow);
             letter-spacing: 0.3px;
+            text-transform: lowercase;
         }
 
         /* ОСНОВНОЙ ТЕКСТ */
         .main-text {
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Times New Roman', serif;
             font-size: 1.1rem;
             line-height: 1.8;
             text-align: left;
@@ -139,12 +162,13 @@
             white-space: pre-line;
             margin-bottom: 50px;
             letter-spacing: 0.2px;
+            text-transform: lowercase;
         }
 
         /* КНОПКА */
         .cta-button {
-            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
-            background: transparent;
+            font-family: 'Brahms Gotisch Cyrillic', 'Cinzel', 'Times New Roman', serif;
+            background: var(--quartz);
             border: 3px solid var(--grimoire-shadow);
             color: var(--grimoire-shadow);
             padding: 20px 40px;
@@ -155,6 +179,8 @@
             opacity: 0;
             transform: translateY(30px);
             margin-top: 20px;
+            text-transform: lowercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .cta-button.visible {
@@ -165,8 +191,10 @@
         .cta-button:hover {
             background: var(--grimoire-shadow);
             color: var(--quartz);
-            box-shadow: 0 0 30px rgba(45, 44, 47, 0.5);
-            transform: scale(1.02);
+            box-shadow: 
+                0 0 30px rgba(45, 44, 47, 0.8),
+                0 8px 25px rgba(0, 0, 0, 0.4);
+            transform: scale(1.05) translateY(-2px);
         }
 
         /* АДАПТИВ ДЛЯ ПЛАНШЕТОВ */
@@ -447,7 +475,7 @@
         // ОБРАБОТЧИК КНОПКИ
         document.querySelector('.cta-button').addEventListener('click', function() {
             // Переход к следующему разделу или форме
-            window.location.href = '/contact'; // или другой URL
+            alert('Переход к форме алхимии!');
         });
     </script>
 </body>
