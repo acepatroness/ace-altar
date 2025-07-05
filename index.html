@@ -14,21 +14,51 @@
             --amethyst: #510FD5;
         }
 
-        /* ЗАГРУЗКА ФИРМЕННЫХ ШРИФТОВ */
-        
-        /* Приоритет 1: Brahms Gotisch Cyrillic */
+        /* ЗАГРУЗКА ЛОКАЛЬНЫХ ФИРМЕННЫХ ШРИФТОВ */
         @font-face {
             font-family: 'Brahms Gotisch Cyrillic';
-            src: url('data:application/font-woff2;charset=utf-8;base64,') format('woff2'),
-                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff2') format('woff2'),
-                 url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff') format('woff');
-            font-display: block;
+            src: url('./fonts/brahms-gotisch.woff2') format('woff2'),
+                 url('./fonts/brahms-gotisch.woff') format('woff');
+            font-display: swap;
             font-weight: normal;
             font-style: normal;
         }
-        
-        /* Приоритет 2: Unbounded (Google Fonts) */
-        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400;700;900&display=swap');
+
+        @font-face {
+            font-family: 'Unbounded';
+            src: url('./fonts/Unbounded-ExtraLight.woff2') format('woff2'),
+                 url('./fonts/Unbounded-ExtraLight.woff') format('woff');
+            font-display: swap;
+            font-weight: 200;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Unbounded';
+            src: url('./fonts/Unbounded-Regular.woff2') format('woff2'),
+                 url('./fonts/Unbounded-Regular.woff') format('woff');
+            font-display: swap;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Unbounded';
+            src: url('./fonts/Unbounded-Bold.woff2') format('woff2'),
+                 url('./fonts/Unbounded-Bold.woff') format('woff');
+            font-display: swap;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Unbounded';
+            src: url('./fonts/Unbounded-Black.woff2') format('woff2'),
+                 url('./fonts/Unbounded-Black.woff') format('woff');
+            font-display: swap;
+            font-weight: 900;
+            font-style: normal;
+        }
 
         /* ОСНОВНЫЕ СТИЛИ */
         * {
@@ -40,7 +70,7 @@
         body {
             background-color: var(--abyss);
             color: var(--grimoire-shadow);
-            font-family: 'Brahms Gotisch Cyrillic', 'Unbounded', 'Times New Roman', serif;
+            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
             overflow-x: hidden;
             cursor: crosshair;
             min-height: 100vh;
@@ -132,8 +162,8 @@
             pointer-events: none;
         }
 
-        /* СТИЛИ ДЛЯ РЕЖИМА BRAHMS GOTISCH CYRILLIC */
-        .brahms-mode .main-header {
+        /* ЗАГОЛОВКИ - BRAHMS GOTISCH CYRILLIC */
+        .main-header {
             font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
             font-size: 2.4rem;
             line-height: 1.2;
@@ -145,7 +175,7 @@
             font-weight: normal;
         }
 
-        .brahms-mode .sub-header {
+        .sub-header {
             font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
             font-size: 1.8rem;
             line-height: 1.2;
@@ -157,7 +187,8 @@
             font-weight: normal;
         }
 
-        .brahms-mode .main-text {
+        /* ОСНОВНОЙ ТЕКСТ - BRAHMS GOTISCH CYRILLIC */
+        .main-text {
             font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
             font-size: 1.1rem;
             line-height: 1.8;
@@ -170,58 +201,9 @@
             font-weight: normal;
         }
 
-        .brahms-mode .cta-button {
-            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
-            text-transform: lowercase;
-            font-weight: normal;
-        }
-
-        /* СТИЛИ ДЛЯ РЕЖИМА UNBOUNDED */
-        .unbounded-mode .main-header {
-            font-family: 'Unbounded', 'Arial', sans-serif;
-            font-size: 2.4rem;
-            line-height: 1.2;
-            margin-bottom: 15px;
-            text-align: left;
-            color: var(--grimoire-shadow);
-            letter-spacing: 0.5px;
-            text-transform: lowercase;
-            font-weight: 900; /* Black */
-        }
-
-        .unbounded-mode .sub-header {
-            font-family: 'Unbounded', 'Arial', sans-serif;
-            font-size: 1.8rem;
-            line-height: 1.2;
-            margin-bottom: 40px;
-            text-align: left;
-            color: var(--grimoire-shadow);
-            letter-spacing: 0.3px;
-            text-transform: lowercase;
-            font-weight: 700; /* Bold */
-        }
-
-        .unbounded-mode .main-text {
-            font-family: 'Unbounded', 'Arial', sans-serif;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            text-align: left;
-            color: var(--grimoire-shadow);
-            white-space: pre-line;
-            margin-bottom: 50px;
-            letter-spacing: 0.3px;
-            text-transform: lowercase;
-            font-weight: 200; /* Extra Light */
-        }
-
-        .unbounded-mode .cta-button {
-            font-family: 'Unbounded', 'Arial', sans-serif;
-            text-transform: lowercase;
-            font-weight: 700; /* Bold */
-        }
-
-        /* ОБЩИЕ СТИЛИ ДЛЯ КНОПКИ */
+        /* КНОПКА - BRAHMS GOTISCH CYRILLIC */
         .cta-button {
+            font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif;
             background: var(--quartz);
             border: 3px solid var(--grimoire-shadow);
             color: var(--grimoire-shadow);
@@ -234,6 +216,8 @@
             transform: translateY(30px);
             margin-top: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-transform: lowercase;
+            font-weight: normal;
         }
 
         .cta-button.visible {
@@ -250,6 +234,26 @@
             transform: scale(1.05) translateY(-2px);
         }
 
+        /* ИНДИКАТОР УСПЕШНОЙ ЗАГРУЗКИ ШРИФТОВ */
+        .font-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(81, 15, 213, 0.8);
+            color: var(--quartz);
+            padding: 5px 10px;
+            font-size: 12px;
+            z-index: 1000;
+            border-radius: 3px;
+            font-family: monospace;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .font-status.visible {
+            opacity: 1;
+        }
+
         /* АДАПТИВ ДЛЯ ПЛАНШЕТОВ */
         @media (max-width: 768px) {
             .parchment {
@@ -258,21 +262,21 @@
             }
 
             .main-header {
-                font-size: 2rem !important;
+                font-size: 2rem;
             }
 
             .sub-header {
-                font-size: 1.5rem !important;
+                font-size: 1.5rem;
             }
 
             .main-text {
-                font-size: 1rem !important;
-                line-height: 1.7 !important;
+                font-size: 1rem;
+                line-height: 1.7;
             }
 
             .cta-button {
-                font-size: 1.2rem !important;
-                padding: 15px 30px !important;
+                font-size: 1.2rem;
+                padding: 15px 30px;
             }
         }
 
@@ -288,26 +292,29 @@
             }
 
             .main-header {
-                font-size: 1.6rem !important;
+                font-size: 1.6rem;
             }
 
             .sub-header {
-                font-size: 1.3rem !important;
+                font-size: 1.3rem;
             }
 
             .main-text {
-                font-size: 0.9rem !important;
-                line-height: 1.6 !important;
+                font-size: 0.9rem;
+                line-height: 1.6;
             }
 
             .cta-button {
-                font-size: 1rem !important;
-                padding: 12px 25px !important;
+                font-size: 1rem;
+                padding: 12px 25px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- ИНДИКАТОР ЗАГРУЗКИ ШРИФТОВ -->
+    <div class="font-status" id="font-status">🔥 Шрифты загружены</div>
+
     <!-- CANVAS ДЛЯ АНИМАЦИИ РАЗРУШЕНИЯ -->
     <canvas id="destruction-canvas"></canvas>
 
@@ -348,30 +355,38 @@
     </div>
 
     <script>
-        // ПРОВЕРКА И ПРИМЕНЕНИЕ ШРИФТОВ
-        function checkAndApplyFonts() {
-            // Ждем загрузки всех шрифтов
+        // ПРОВЕРКА ЗАГРУЗКИ ЛОКАЛЬНЫХ ШРИФТОВ
+        function checkLocalFonts() {
+            const fontStatus = document.getElementById('font-status');
+            
+            // Показываем индикатор сразу
+            setTimeout(() => {
+                fontStatus.classList.add('visible');
+            }, 1000);
+            
+            // Проверяем загрузку через document.fonts API
             document.fonts.ready.then(() => {
-                // Проверяем, загрузился ли Brahms Gotisch Cyrillic
-                const testElement = document.createElement('span');
-                testElement.style.fontFamily = '"Brahms Gotisch Cyrillic"';
-                testElement.style.fontSize = '12px';
-                testElement.style.position = 'absolute';
-                testElement.style.visibility = 'hidden';
-                testElement.textContent = 'Test';
-                document.body.appendChild(testElement);
+                const brahmsLoaded = document.fonts.check('16px "Brahms Gotisch Cyrillic"');
+                const unboundedLoaded = document.fonts.check('16px "Unbounded"');
                 
-                const computedFont = window.getComputedStyle(testElement).fontFamily;
-                document.body.removeChild(testElement);
-                
-                // Если Brahms Gotisch Cyrillic загрузился
-                if (computedFont.includes('Brahms Gotisch Cyrillic')) {
-                    console.log('✅ Brahms Gotisch Cyrillic загружен успешно');
-                    document.body.className = 'brahms-mode';
+                if (brahmsLoaded) {
+                    fontStatus.textContent = '🔥 Brahms Gotisch загружен';
+                    fontStatus.style.background = 'rgba(81, 15, 213, 0.9)';
+                    console.log('✅ Brahms Gotisch Cyrillic загружен с локального сервера');
+                } else if (unboundedLoaded) {
+                    fontStatus.textContent = '⚡ Unbounded активен';
+                    fontStatus.style.background = 'rgba(193, 191, 191, 0.8)';
+                    console.log('⚡ Используется Unbounded как fallback');
                 } else {
-                    console.log('⚠️ Brahms Gotisch Cyrillic не загружен, переключаемся на Unbounded');
-                    document.body.className = 'unbounded-mode';
+                    fontStatus.textContent = '⚠️ Системный шрифт';
+                    fontStatus.style.background = 'rgba(45, 44, 47, 0.8)';
+                    console.log('⚠️ Используется системный шрифт');
                 }
+                
+                // Скрываем индикатор через 4 секунды
+                setTimeout(() => {
+                    fontStatus.style.opacity = '0';
+                }, 4000);
             });
         }
 
@@ -543,12 +558,13 @@
         }
 
         // ЗАПУСК ВСЕХ СИСТЕМ
-        checkAndApplyFonts();
+        checkLocalFonts();
         animate();
         revealManifesto();
 
         // ОБРАБОТЧИК КНОПКИ
         document.querySelector('.cta-button').addEventListener('click', function() {
+            // Здесь можно добавить переход на форму или следующую страницу
             alert('Переход к форме алхимии!');
         });
     </script>
