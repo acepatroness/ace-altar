@@ -3,32 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE SINGULARITY</title>
+    <title>THE ALTAR</title>
     <style>
         /* ПЕРЕМЕННЫЕ ТВОЕЙ ИМПЕРИИ */
         :root {
             --amethyst: #510FD5;
             --abyss: #111111;
-            --quartz: #EFF0F4;
+            --grimoire-shadow: #2D2C2F;
             --structure-gray: #C1BFBF;
+            --quartz: #EFF0F4;
         }
 
-        /* ЗАГРУЗКА ШРИФТОВ */
+        /* ЗАГРУЗКА ШРИФТОВ С НАДЁЖНЫХ ИСТОЧНИКОВ */
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400&display=swap');
         @font-face {
             font-family: 'Brahms Gotisch Cyrillic';
             src: url('https://db.onlinewebfonts.com/t/973d52fb3f4222df8913902353a23335.woff2') format('woff2');
+            font-display: swap; /* Показывает запасной шрифт, пока грузится основной */
         }
 
-        /* ОБНУЛЕНИЕ И ОСНОВА */
+        /* ОСНОВА */
         body {
             margin: 0;
             background-color: var(--abyss);
+            color: var(--structure-gray);
             overflow: hidden;
-            cursor: none; /* Курсор — это аномалия, а не стрелка */
+            cursor: crosshair;
         }
 
-        #singularity-canvas {
+        canvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -47,49 +50,62 @@
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
-            color: var(--structure-gray);
         }
 
         .text-block {
-            background: rgba(17, 17, 17, 0.5); /* Полупрозрачная подложка, чтобы текст читался */
-            backdrop-filter: blur(5px); /* Размытие фона за текстом для эффекта глубины */
-            -webkit-backdrop-filter: blur(5px);
+            background: rgba(45, 44, 47, 0.6); /* Grimoire Shadow с прозрачностью */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             padding: 30px 40px;
-            border: 1px solid rgba(81, 15, 213, 0.3); /* Едва заметная граница */
-            box-shadow: 0 0 50px rgba(17, 17, 17, 0.5);
+            border: 1px solid rgba(81, 15, 213, 0.5); /* Amethyst с прозрачностью */
+            max-width: 600px;
             opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+            transform: translateY(20px);
+            transition: opacity 1.5s ease-out 0.5s, transform 1.5s ease-out 0.5s;
         }
-
+        
         .text-block.visible {
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0);
         }
 
-        /* ШРИФТЫ */
-        .header-font { font-family: 'Brahms Gotisch Cyrillic', serif; text-transform: lowercase; }
-        .body-font { font-family: 'Unbounded', sans-serif; font-weight: 200; }
+        /* ШРИФТЫ И ТЕКСТ */
+        .header-font { font-family: 'Brahms Gotisch Cyrillic', 'Times New Roman', serif; text-transform: lowercase; }
+        .body-font { font-family: 'Unbounded', 'Arial', sans-serif; font-weight: 200; }
 
         #main-header { font-size: 2.2rem; color: var(--quartz); margin: 0; }
-        #sub-header { font-size: 1.3rem; margin-top: 5px; margin-bottom: 20px; }
-        #main-text p { margin: 8px 0; font-size: 1rem; line-height: 1.6; max-width: 500px; }
-        #main-text p.highlight { color: var(--quartz); font-weight: 400; text-shadow: 0 0 5px var(--amethyst); }
+        #sub-header { font-size: 1.3rem; margin-top: 5px; margin-bottom: 20px; color: var(--amethyst); text-shadow: 0 0 10px var(--amethyst); }
+        #main-text p { margin: 8px 0; font-size: 1rem; line-height: 1.6; }
+        #main-text p.highlight { color: var(--quartz); font-weight: 400; }
 
         /* КНОПКА */
         #cta-button {
             background-color: var(--amethyst); color: var(--quartz); border: none;
-            padding: 15px 40px; margin-top: 30px; font-size: 1.5rem; cursor: none;
+            padding: 15px 40px; margin-top: 30px; font-size: 1.5rem; cursor: crosshair;
             box-shadow: 0 0 20px rgba(81, 15, 213, 0.7);
-            opacity: 0; transform: translateY(20px);
-            transition: all 0.5s ease 2s; /* Появляется с задержкой */
+            opacity: 0;
+            transition: all 0.5s ease;
         }
-        #cta-button.visible { opacity: 1; transform: translateY(0); }
+        
+        #cta-button.visible {
+             opacity: 1;
+        }
+
         #cta-button:hover { transform: scale(1.05); box-shadow: 0 0 35px var(--amethyst); }
+        
+        /* АДАПТИВ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
+        @media (max-width: 768px) {
+            .text-block { padding: 20px; }
+            #main-header { font-size: 1.8rem; }
+            #sub-header { font-size: 1.1rem; }
+            #main-text p { font-size: 0.9rem; }
+            #cta-button { font-size: 1.2rem; padding: 12px 30px; }
+        }
+
     </style>
 </head>
 <body>
-    <canvas id="singularity-canvas"></canvas>
+    <canvas id="vitrage-canvas"></canvas>
     <div class="manifesto-container">
         <div class="text-block">
             <h1 id="main-header" class="header-font"></h1>
@@ -100,108 +116,99 @@
     </div>
 
     <script>
-        // --- ДВИЖОК СИНГУЛЯРНОСТИ ---
-        const canvas = document.getElementById('singularity-canvas');
+        // --- ДВИЖОК "РАСКОЛОТЫЙ ВИТРАЖ" ---
+        const canvas = document.getElementById('vitrage-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        let particlesArray;
-        const mouse = { x: null, y: null, radius: (canvas.height/100) * (canvas.width/100) };
-
-        window.addEventListener('mousemove', (event) => {
+        const mouse = { x: undefined, y: undefined };
+        canvas.addEventListener('mousemove', (event) => {
             mouse.x = event.x;
             mouse.y = event.y;
         });
 
-        class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x; this.y = y; this.directionX = directionX;
-                this.directionY = directionY; this.size = size; this.color = color;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = 'rgba(239, 240, 244, 0.8)'; // Цвет --quartz
-                ctx.fill();
+        class Shard {
+            constructor(x, y, length, angle, speed, color) {
+                this.x = x; this.y = y; this.length = length;
+                this.angle = angle; this.speed = speed; this.color = color;
+                this.life = 1; // 1 = full life, 0 = dead
             }
             update() {
-                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
-                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
-
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx*dx + dy*dy);
-                if (distance < mouse.radius + this.size){
-                    if(mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 1;
-                    if(mouse.x > this.x && this.x > this.size * 10) this.x -= 1;
-                    if(mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 1;
-                    if(mouse.y > this.y && this.y > this.size * 10) this.y -= 1;
-                }
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+                this.life -= 0.005; // Осколки медленно исчезают
+            }
+            draw() {
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x + Math.cos(this.angle) * this.length, this.y + Math.sin(this.angle) * this.length);
+                ctx.strokeStyle = `rgba(81, 15, 213, ${this.life * 0.5})`; // Amethyst
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.restore();
             }
         }
 
-        function init() {
-            particlesArray = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 12000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 1.5) + 0.5;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * .2) - .1;
-                let directionY = (Math.random() * .2) - .1;
-                particlesArray.push(new Particle(x, y, directionX, directionY, size));
+        let shards = [];
+        function createShards(count) {
+            for (let i = 0; i < count; i++) {
+                const length = Math.random() * 30 + 10;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 0.3 + 0.1;
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                shards.push(new Shard(x, y, length, angle, speed));
             }
         }
 
-        function connect() {
-            let opacityValue = 1;
-            for (let a = 0; a < particlesArray.length; a++) {
-                for (let b = a; b < particlesArray.length; b++) {
-                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
-                                 + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-                    if (distance < (canvas.width/7) * (canvas.height/7)) {
-                        opacityValue = 1 - (distance/20000);
-                        ctx.strokeStyle = `rgba(81, 15, 213, ${opacityValue})`; // Цвет --amethyst
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
-                    }
-                }
+        function handleMouseInteraction() {
+            if(mouse.x === undefined) return;
+            // Создаем новые осколки у курсора
+            for (let i = 0; i < 2; i++) {
+                const length = Math.random() * 40 + 20;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 0.5 + 0.2;
+                shards.push(new Shard(mouse.x, mouse.y, length, angle, speed));
             }
         }
 
         function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0,0,innerWidth, innerHeight);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-            }
-            connect();
-        }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleMouseInteraction();
 
-        init();
+            shards = shards.filter(shard => shard.life > 0); // Удаляем мертвые осколки
+            if (shards.length < 100) { // Поддерживаем плотность
+                createShards(1);
+            }
+
+            shards.forEach(shard => {
+                shard.update();
+                shard.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        
+        createShards(100);
         animate();
 
         window.addEventListener('resize', () => {
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
-            mouse.radius = (canvas.height/100) * (canvas.width/100);
-            init();
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
+
 
         // --- ЛОГИКА ПРОЯВЛЕНИЯ МАНИФЕСТА ---
         const textBlock = document.querySelector('.text-block');
         const ctaButton = document.getElementById('cta-button');
+        const mainHeaderEl = document.getElementById('main-header');
+        const subHeaderEl = document.getElementById('sub-header');
+        const mainTextEl = document.getElementById('main-text');
 
         const content = {
             header: "наш храм не для всех",
-            subHeader: "и это хорошо",
+            subHeader: "только для смелых",
             paragraphs: [
                 "Вы ищете просто «агентство» или «исполнителя»?!",
                 "Закройте эту вкладку прямо сейчас!",
@@ -211,33 +218,35 @@
                 "Мы не копируем! Мы создаем!",
                 "Мы против шаблонов и заезженных решений.",
                 "Нас тошнит от фейка и «успешного успеха».",
+                "Мы против копипаста и воровства идей!",
                 "Мы не придумываем лживую легенду.",
                 "Мы погружаемся в ваш хаос и тьму.",
                 "Мы вскрываем ВАШ ЛИЧНЫЙ КОД!",
                 "Мы сжигаем всё лишнее. Весь мусор.",
                 "На этом пепле строим вашу Империю.",
-                "Сжигаем шаблоны и строим легенды.",
+                "Мы сжигаем шаблоны и строим легенды.",
                 "Готовы к персональному ритуалу?",
                 "Добро пожаловать к Алтарю."
             ]
         };
 
         function revealManifesto() {
-            document.getElementById('main-header').textContent = content.header;
-            document.getElementById('sub-header').textContent = content.subHeader;
-            const mainTextEl = document.getElementById('main-text');
+            mainHeaderEl.textContent = content.header;
+            subHeaderEl.textContent = content.subHeader;
             mainTextEl.innerHTML = '';
             content.paragraphs.forEach(p_text => {
                 const p = document.createElement('p');
                 p.textContent = p_text;
-                if (p_text.includes("ВАШ ЛИЧНЫЙ КОД")) p.classList.add('highlight');
+                if (p_text.includes("ВАШ ЛИЧНЫЙ КОД!")) {
+                    p.classList.add('highlight');
+                }
                 mainTextEl.appendChild(p);
             });
-
+            
             setTimeout(() => {
                 textBlock.classList.add('visible');
                 ctaButton.classList.add('visible');
-            }, 1000);
+            }, 500);
         }
 
         revealManifesto();
